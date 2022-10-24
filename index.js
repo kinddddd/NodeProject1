@@ -1,5 +1,7 @@
 const express = require('express');
 require('dotenv').config();
+const moviesRoutes = require('./src/api/models/Movies.routes.js');
+
 
 const router = express.Router();
 
@@ -9,6 +11,16 @@ const PORT = process.env.PORT;
 const server = express();
 
 connectDb();
+
+
+
+server.use(express.json());
+server.use(express.urlencoded({ extended: false }));
+
+
+server.use('/movies', moviesRoutes);
+
+
 
 
 
