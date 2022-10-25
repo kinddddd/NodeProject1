@@ -65,4 +65,57 @@ router.get('/year/:year', async (req, res) => {
 });
 
 
+router.post('/create', async (req, res) => {
+    try {
+        
+        const newMovie = new Movie({
+            title: req.body.title,
+            director: req.body.director,
+            year: req.body.year,
+            genre: req.body.genre
+        });
+
+
+        const createdMovie = await newMovie.save();
+        return res.status(201).json(createdMovie);
+
+
+    } catch (error) {
+        console.log('No se ha podido crear la película correctamente', error);
+    }
+});
+
+
+router.delete('/delete/:id', async (req, res) => {
+
+    try {
+        
+        const {id} = req.params;
+        await Movie.findByIdAndDelete(id);
+        return res.status(200).json('Character deleted');
+
+    } catch (error) {
+        console.log('No se ha podido eliminar correctamente la película', error);
+    }
+
+});
+
+
+router.put('/edit/:id', async (req, res) => {
+    try {
+        
+        const { id } = req.params;
+        const movieModify = new Movie(req.body);
+        movieModify._id = id;
+        const movieUpdated = await Movie.findByIdAndUpdate(id, movieModify);
+        return res.status(200).json(movieUpdated);
+
+    } catch (error) {
+        console.log('No se ha podido editar la película correctamente', error);
+    }
+});
+
+
+
+
 module.exports = router;
