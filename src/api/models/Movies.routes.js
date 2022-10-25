@@ -81,7 +81,7 @@ router.post('/create', async (req, res) => {
 
 
     } catch (error) {
-        console.log('No se ha podido crear la película correctamente', error);
+        return res.status(500).json('No se ha podido crear la película correctamente');
     }
 });
 
@@ -95,7 +95,7 @@ router.delete('/delete/:id', async (req, res) => {
         return res.status(200).json('Character deleted');
 
     } catch (error) {
-        console.log('No se ha podido eliminar correctamente la película', error);
+        return res.status(500).json('No se ha podido eliminar correctamente la película');
     }
 
 });
@@ -111,7 +111,7 @@ router.put('/edit/:id', async (req, res) => {
         return res.status(200).json(movieUpdated);
 
     } catch (error) {
-        console.log('No se ha podido editar la película correctamente', error);
+        return res.status(500).json('No se ha podido editar la película correctamente');
     }
 });
 

@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const moviesRoutes = require('./src/api/models/Movies.routes.js');
+const cinemaRoutes = require('./src/api/models/Cinema.routes.js');
 
 
 const router = express.Router();
@@ -19,6 +20,8 @@ server.use(express.urlencoded({ extended: false }));
 
 
 server.use('/movies', moviesRoutes);
+
+server.use('/cinemas', cinemaRoutes);
 
 
 
