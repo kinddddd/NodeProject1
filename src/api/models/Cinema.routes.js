@@ -1,10 +1,14 @@
 const express = require('express');
 const Cinema = require('./Cinema.js');
+const upload = require('../../middlewares/file');
 
 const router = express.Router();
 
+
+//* Lo que va dentro de single es el campo del modelo en el que va la imagen, en este caso img
 router.post('/create', async (req, res) => {
     try {
+
         const newCinema = new Cinema({
             name: req.body.name,
             location: req.body.location,

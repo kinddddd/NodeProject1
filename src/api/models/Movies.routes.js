@@ -1,5 +1,6 @@
 const express = require('express');
 const Movie = require('./Movie.js');
+const upload = require('../../middlewares/file')
 
 const router = express.Router();
 
@@ -30,7 +31,7 @@ router.get('/:id', async (req, res) => {
 router.get('/title/:title', async (req, res) => {
     const {title} = req.params;
     try {
-        const titleToFind = await Movie.find({ title: title });
+        const titleToFind = await Movie.findOne({ title: title });
         console.log(titleToFind);
         return res.status(200).json(titleToFind);
     } catch (error) {
@@ -65,13 +66,20 @@ router.get('/year/:year', async (req, res) => {
 });
 
 
-router.post('/create', async (req, res) => {
+router.post('/create', upload.single('img'), async (req, res) => {
     try {
+        let imagen;
+        if (req.file) {
+            imagen = req.file.path;
+        } else {
+            imagen = req.body.img;
+        }
         
         const newMovie = new Movie({
             title: req.body.title,
             director: req.body.director,
             year: req.body.year,
+            img: imagen,
             genre: req.body.genre
         });
 
